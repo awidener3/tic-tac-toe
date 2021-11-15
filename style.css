@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -8,27 +10,31 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: 'Source Code Pro', monospace;
+    background: #2c2c2c;
 }
 
 header {
     text-align: center;
     padding: 15px;
     margin-bottom: 15px;
-    background-color: #ccc;
+    background-color: rgb(27, 27, 27);
+    color: white;
 }
 
 footer {
     text-align: center;
     padding: 5px;
     margin-top: auto;
-    background-color: #ccc;
+    background-color: rgb(27, 27, 27);
+    color: white;
 }
 
 /* GAMEBOARD */
 
 .gameboard {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
+    grid-template-columns: repeat(3, 150px);
     margin: auto;
 }
 
@@ -37,13 +43,34 @@ footer {
     justify-content: center;
     align-items: center;
     font-size: 3rem;
-    height: 100px;
-    width: 100px;
-    border: 1px solid red;
+    height: 150px;
+    width: 150px;
+    border: 1px solid black;
     background-color: #eee;
+    font-size: 6rem;
 }
 
 .gameboard-square:hover {
     cursor: pointer;
     background-color: #aaa;
+}
+
+.reset-btn {
+    width: 150px;
+    height: 75px;
+    border-radius: 8px;
+    border: none;
+    background-color: rgb(50, 37, 228);
+    font-size: 2rem;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    align-self: center;
+    padding: 5px;
+    transition: 0.2s;
+}
+
+.reset-btn:hover {
+    cursor: pointer;
+    font-size: 2.3rem;
+    background-color: rgb(32, 22, 175);
 }
