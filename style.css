@@ -74,14 +74,14 @@ footer {
     display: flex;
     text-align: center;
     justify-content: center;
-    width: 60%;
+    width: 450px;
     margin: auto;
     border-radius: 12px;
     background-color: rgb(27, 27, 27);
 }
 
 .scores h3 {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
 }
 
 .player {
