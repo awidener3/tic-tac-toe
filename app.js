@@ -4,19 +4,19 @@
 
 const gameboardModule = (function() {
     const squares = document.getElementsByClassName('gameboard-square');
-    const _gameboardArea = document.getElementsByClassName('gameboard')[0];
+    const gameboardArea = document.getElementsByClassName('gameboard')[0];
     let board = [];
 
     // create gameboard
     for (let i = 0; i < 9; i++) {
         board.push(''); // add the empty strings into 'board'
-        _createSquare(); // create corresponding square on page
+        createSquare(); // create corresponding square on page
     }
 
-    function _createSquare() {
+    function createSquare() {
         let square = document.createElement('div');
         square.classList.add('gameboard-square');
-        _gameboardArea.appendChild(square);
+        gameboardArea.appendChild(square);
     }
 
     return {
