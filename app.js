@@ -1,35 +1,12 @@
-// function checkWin() {
+// GAMEBOARD CREATION //
+// this won't be changed except for reloading, so this will probably go into a module
 
-    // horizontal wins
-    // win state 1 : [1: 'X', 2: 'X', 3: 'X' || 1: 'O', 2: 'O', 3: 'O']
-    // win state 2 : [4: 'X', 5: 'X', 6: 'X' || 4: 'O', 5: 'O', 6: 'O']
-    // win state 3 : [7: 'X', 8: 'X', 9: 'X' || 7: 'O', 8: 'O', 9: 'O']
-
-    // vertical wins
-    // win state 4 : [1: 'X', 4: 'X', 7: 'X' || 1: 'O', 4: 'O', 7: 'O']
-    // win state 5 : [2: 'X', 5: 'X', 8: 'X' || 2: 'O', 5: 'O', 8: 'O']
-    // win state 6 : [3: 'X', 6: 'X', 9: 'X' || 3: 'O', 6: 'O', 9: 'O']
-
-    // diagonal wins
-    // win state 7 : [1: 'X', 5: 'X', 9: 'X' || 1: 'O', 5: 'O', 9: 'O']
-    // win state 8 : [3: 'X', 5: 'X', 7: 'X' || 3: 'O', 5: 'O', 7: 'O']
-
-// VARIABLE DECLARATION //
-const gameboardArea = document.getElementsByClassName('gameboard')[0];
-const resetButton = document.getElementsByClassName('reset-btn')[0];
-const newGameButton = document.getElementsByClassName('new-game-btn')[0];
 const squares = document.getElementsByClassName('gameboard-square');
 const gameDisplay = document.getElementsByClassName('game-display')[0];
-const playerOneScore_div = document.getElementsByClassName('p1-score')[0];
-const playerTwoScore_div = document.getElementsByClassName('p2-score')[0];
-let playerOneScore = 0;
-let playerTwoScore = 0;
+const gameboardArea = document.getElementsByClassName('gameboard')[0];
 let board = [];
-let xMoves = 0; // this will eventually go into the player object
-let oMoves = 0; // ^^^
-
-
-// GAMEBOARD CREATION //
+let xMoves = 0; 
+let oMoves = 0; 
 
 function createGameBoard() {
     for (let i = 0; i < 9; i++) {
@@ -44,38 +21,69 @@ function createSquare() {
     gameboardArea.appendChild(square);
 }
 
-
 // GAME FUNCTIONALITY //
 
+const playerOneScore_div = document.getElementsByClassName('p1-score')[0];
+const playerTwoScore_div = document.getElementsByClassName('p2-score')[0];
+
+let playerOneScore = 0;
+let playerTwoScore = 0;
+
 function game () {
+    let gameOver = false;
     for (let i = 0; i < squares.length; i++) {
         squares[i].addEventListener('click', function() {
+            if (gameOver === true) {
+                return;
+            }
+            // if the square is empty
             if (squares[i].textContent == '') {
+                // and X has already gone
                 if (xMoves > oMoves) {
+                    // O goes
                     squares[i].innerText = 'O'
-                    oMoves++;
                     board[i] = 'O';
+                    oMoves++;
+                // otherwise, X goes
                 } else {
                     squares[i].innerText = 'X'
-                    xMoves++;
                     board[i] = 'X';
+                    xMoves++;
                 }
             }
-            checkWin();
+            gameOver = checkWin();
         })
     }
 }
 
 function checkWin () {
+    if(noneEmpty()) { 
+        gameDisplay.innerText = 'It\'s a Tie! ⚔️';
+        return true;
+    }
+
+    // X's win
     if (checkHorizontal() == true || checkVertical() == true || checkDiagonal() == true) {
-        gameDisplay.innerText = 'X\'s Win! 👑';
         playerOneScore++;
         playerOneScore_div.innerText = playerOneScore;
-    } else if (checkHorizontal() == false || checkVertical() == false || checkDiagonal() == false) {
-        gameDisplay.innerText = 'O\'s Win! 🏆';
+        gameDisplay.innerText = 'X\'s Win! 👑';
+        return true;
+    } 
+    
+    // O's win
+    if (checkHorizontal() == false || checkVertical() == false || checkDiagonal() == false) {
         playerTwoScore++;
         playerTwoScore_div.innerText = playerTwoScore;
+        gameDisplay.innerText = 'O\'s Win! 🏆';
+        return true;
     }
+}
+
+function noneEmpty() {
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === '') return false;
+    }
+    return true;
 }
 
 function checkHorizontal() {
@@ -137,17 +145,14 @@ function checkDiagonal() {
 
 // BUTTONS //
 
-resetButton.addEventListener('click', reset)
+const resetButton = document.getElementsByClassName('reset-btn')[0];
+const newGameButton = document.getElementsByClassName('new-game-btn')[0];
 
-newGameButton.addEventListener('click', function() {
-    reset();
-    playerOneScore = 0;
-    playerTwoScore = 0;
-    playerOneScore_div.innerText = playerOneScore;
-    playerTwoScore_div.innerText = playerTwoScore;
-})
+resetButton.addEventListener('click', resetBoard)
 
-function reset() {
+newGameButton.addEventListener('click', resetScore)
+
+function resetBoard() {
     for (let i = 0; i < board.length; i++) {
         board[i] = '';
         squares[i].innerText = '';
@@ -155,9 +160,23 @@ function reset() {
     xMoves = 0;
     oMoves = 0;
     gameDisplay.innerText = '';
+    game();
+}
+
+function resetScore() {
+    resetBoard();
+    playerOneScore = 0;
+    playerTwoScore = 0;
+    playerOneScore_div.innerText = playerOneScore;
+    playerTwoScore_div.innerText = playerTwoScore;
 }
 
 // MAIN //
 
 createGameBoard();
 game();
+
+// Goals
+
+// stop user from clicking <div> once a win condition is met
+// create modules and factories for appropriate elements
