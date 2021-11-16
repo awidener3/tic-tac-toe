@@ -1,3 +1,5 @@
+/* TIC TAC TOE */ 
+
 // GAMEBOARD CREATION //
 // this won't be changed except for reloading, so this will probably go into a module
 
@@ -10,8 +12,8 @@ let oMoves = 0;
 
 function createGameBoard() {
     for (let i = 0; i < 9; i++) {
-        board.push('');
-        createSquare();
+        board.push(''); // add the empty strings into 'board'
+        createSquare(); // create corresponding square on page
     }
 }
 
